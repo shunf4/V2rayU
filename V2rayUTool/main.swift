@@ -51,13 +51,15 @@ class V2rayUTool: NSObject {
                 NSLog("No authorization has been granted to modify network configuration");
                 return;
             }
+            
+            Swift.print("setProxy: \(mode)")
 
             // set system proxy
             let prefRef = SCPreferencesCreateWithAuthorization(kCFAllocatorDefault, "V2rayU" as CFString, nil, authRef)!
             let sets = SCPreferencesGetValue(prefRef, kSCPrefNetworkServices)!
 
             // backup system proxy
-            if mode == .backup {
+            if mode == .backup || mode == .manual {
                 (sets as! NSDictionary).write(toFile: SysProxyBackupPlist, atomically: true)
                 return
             }
@@ -98,7 +100,7 @@ class V2rayUTool: NSObject {
 
             // restore system proxy setting in off or manual or restore
             var originalSets: Dictionary<String, Dictionary<String, Any>>?
-            if mode == .off || mode == .manual || mode == .restore {
+            if mode == .off || mode == .restore {
                 originalSets = (NSDictionary(contentsOfFile: SysProxyBackupPlist) as? Dictionary<String, Dictionary<String, Any>>)
             }
 
@@ -108,7 +110,7 @@ class V2rayUTool: NSObject {
 
                 if hardware != nil && ["AirPort", "Wi-Fi", "Ethernet"].contains(hardware as! String) {
                     // restore system proxy setting in off or manual or restore
-                    if (mode == .off || mode == .manual || mode == .restore) && originalSets != nil && originalSets!.keys.contains(key) {
+                    if (mode == .off || mode == .restore) && originalSets != nil && originalSets!.keys.contains(key) {
                         if let nowSet = originalSets![key] {
                             proxies = nowSet["Proxies"] as! [NSObject: AnyObject];
                         }

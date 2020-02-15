@@ -5,3 +5,5 @@ V2rayU.xcworkspace/xcuserdata
 Build/v2ray-core
 .DS_Store
 .idea
+Build/Intermediates.noindex/
+Build/Products/

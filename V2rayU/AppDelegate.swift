@@ -69,9 +69,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         if !(path.contains("Developer/Xcode") || path.contains("/Applications/V2rayU.app")) {
             makeToast(message: "Please drag 'V2rayU' to '/Applications' directory", displayDuration: 5.0)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5.5) {
-                NSApplication.shared.terminate(self)
-            }
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 5.5) {
+//                NSApplication.shared.terminate(self)
+//            }
         }
 
         // set global hotkey
